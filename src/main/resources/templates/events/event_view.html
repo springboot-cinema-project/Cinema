@@ -1,0 +1,53 @@
+<section th:fragment="content">
+	<!-- prs title wrapper Start -->
+	<div class="prs_title_main_sec_wrapper">
+		<div class="prs_title_img_overlay"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="prs_title_heading_wrapper">
+						<h2>Event Single Page</h2>
+						<ul>
+							<li><a href="#">Home</a></li>
+							<li>&nbsp;&nbsp; >&nbsp;&nbsp; Event</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- prs title wrapper End -->
+
+	<!-- prs es about wrapper Start -->
+	<div class="prs_es_about_main_section_wrapper">
+		<div class="container">
+			<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				<div class="hs_blog_view_img_wrapper prs_event_single_slider_wrapper">
+					<img th:src="@{/images/content/event/eventview.png}" alt="Event Image" class="event-image">
+					<div th:attr="data-id=${view.id}" class="overlay-content">
+						<h1 class="merry-christmas"></h1>
+						<div class="title-box">
+							<p th:text="${view.eventTitle}">Default Title</p>
+						</div>
+						<div class="time-box">
+							<p th:text="${view.eventStartDate} + ' ~ ' + ${view.eventEndDate}">Default Start Date ~ Default End Date</p>
+						</div>
+						<div class="content-box">
+							<p th:text="${view.eventContent}">Default Content</p>
+						</div>
+						<div class="button-box">
+							<a href="#" class="event-button">Send a Letter</a>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- prs es about wrapper End -->
+</section>
+
+

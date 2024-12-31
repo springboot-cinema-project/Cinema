@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.movie.mapper.MovieMapper">
+    <!-- SQL 문 -->
+    <insert id="insertMovie" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO
+            movies (title, running_time, release_date, end_date, country, production, distribution, genre, director, actor, poster_img, content)
+            VALUES (#{title}, #{runningTime}, #{releaseDate}, #{endDate}, #{country}, #{production}, #{distribution}, #{genre}, #{director}, #{actor}, #{posterImg}, #{content})
+    </insert>
+
+    <update id="updateMovie">
+        UPDATE
+            movies
+        SET
+            title = #{title},
+            running_time = #{runningTime},
+            release_date = #{releaseDate},
+            end_date = #{endDate},
+            country = #{country},
+            production = #{production},
+            distribution = #{distribution},
+            genre = #{genre},
+            director = #{director},
+            actor = #{actor},
+            poster_img = #{posterImg},
+            content = #{content}
+        WHERE
+            id = #{id}
+    </update>
+
+    <select id="upcomingMovie" resultType="com.movie.domain.Movies">
+        SELECT
+            *
+        FROM
+            movies
+        WHERE
+            release_date <![CDATA[>]]> NOW()
+    </select>
+    <select id="releasedMovie" resultType="com.movie.domain.Movies">
+        SELECT
+            *
+        FROM
+            movies
+        WHERE
+            release_date <![CDATA[<=]]> NOW() AND end_date <![CDATA[>=]]> NOW()
+    </select>
+    <select id="bestMovies" resultType="com.movie.domain.Movies">
+        SELECT
+            *
+        FROM
+            movies
+        WHERE
+            end_date <![CDATA[<]]> NOW()
+    </select>
+</mapper>
