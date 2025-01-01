@@ -22,14 +22,14 @@ public class BookingService {
     @Autowired
     private TicketMapper ticketMapper;
 
-    public void insertBooking(Long[] seatsId, long userId, long scheduleId, long couponId, long price) {
+    public void insertBooking(Long[] seatsId, long userId, long scheduleId, long couponId, long totalPrice) {
 
         Bookings bookings = new Bookings();
 
         bookings.setUserId(userId);
         bookings.setScheduleId(scheduleId);
         bookings.setCouponId(couponId);
-        bookings.setPrice(price);
+        bookings.setPrice(totalPrice);
 
         bookingMapper.insertBookingWithCoupon(bookings);
         userCouponMapper.updateCouponState(userId, couponId);
@@ -40,13 +40,13 @@ public class BookingService {
 
     }
 
-    public void insertBooking(Long[] seatsId, long userId, long scheduleId, long price) {
+    public void insertBooking(Long[] seatsId, long userId, long scheduleId, long totalPrice) {
 
         Bookings bookings = new Bookings();
 
         bookings.setUserId(userId);
         bookings.setScheduleId(scheduleId);
-        bookings.setPrice(price);
+        bookings.setPrice(totalPrice);
 
         bookingMapper.insertBooking(bookings);
 

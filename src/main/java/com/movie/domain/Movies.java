@@ -13,14 +13,7 @@ public class Movies {
     private LocalDate releaseDate;
     private LocalDate endDate;
     private Long audience;
-    private String country;
-    private String production;
-    private String distribution;
     private String genre;
-    private String director;
-    private String actor;
-    private Double book_rate;
     private String posterImg;
-    private String content;
 
 }
