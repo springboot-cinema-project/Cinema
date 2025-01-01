@@ -79,9 +79,11 @@ public class BookingController {
 
     @PostMapping("/checkSeatState")
     public ResponseEntity<Map<String, String>> checkSeatState(@RequestBody List<Long> seatIds) {
-
+        for (long id : seatIds) {
+            System.out.println("id = " + id);
+        }
         long result = seatService.checkSeatState(seatIds);
-
+        System.out.println(result);
         Map<String, String> response = new HashMap<>();
         if (result == 0) {
             response.put("state", "possible");
@@ -92,46 +94,18 @@ public class BookingController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/proceed")
-    public String bookingProceed(@RequestParam("selectedSeatIds") String selectedSeatId, Model model, @RequestParam("scheduleId") long scheduleId, @ModelAttribute("sessionUser") SessionUser sessionUser) {
-
-        if (sessionUser != null) {
-            // 문자열을 Long 배열로 변환
-            String[] seatIdStrings = selectedSeatId.split(",");
-            Long[] seatIds = Arrays.stream(seatIdStrings)
-                    .map(Long::valueOf) // 문자열을 Long으로 변환
-                    .toArray(Long[]::new); // Long[] 배열로 변환
-
-            seatService.bookingStates(seatIds);
-
-            User user = userService.getUserInfo(sessionUser.getId());
-            List<Seats> seats = seatService.bookingSeats(seatIds);
-            Schedules schedule = scheduleService.getSchedule(scheduleId);
-            Movies movie = movieService.movieInfo(schedule.getMovieId());
-
-            int totalPrice = 0;
-
-            for (Seats seat : seats) {
-                totalPrice += seat.getSeatPrice();
-            }
-
-            model.addAttribute("user", user);
-            model.addAttribute("seats", seats);
-            model.addAttribute("schedule", schedule);
-            model.addAttribute("movie", movie);
-            model.addAttribute("totalPrice", totalPrice);
-
-        } else {
-            return "redirect:/";
-        }
-        return "booking/booking_type";
-
-    }
-
-    @PostMapping("/payment")
+    @PostMapping("/payment/complete")
     public String payment(Model model, @RequestParam Long[] seatsId, @RequestParam(required = false) Long couponId, @RequestParam(required = false) Long totalPrice, @RequestParam Long scheduleId, @RequestParam Long movieId, @ModelAttribute("sessionUser") SessionUser sessionUser) {
-        System.out.println("쿠폰아이디 넘어옴" + couponId);
+        for (long seat : seatsId) {
+            System.out.println("seat = " + seat);
+        }
+        System.out.println("totalPrice = " + totalPrice);
+        System.out.println("scheduleId = " + scheduleId);
+        System.out.println("movieId = " + movieId);
+        System.out.println("sessionUser = " + sessionUser.getId());
+
         if (sessionUser != null) {
+
             if (couponId != null) {
                 bookingService.insertBooking(seatsId, sessionUser.getId(), scheduleId, couponId, totalPrice);
             } else {
@@ -156,4 +130,40 @@ public class BookingController {
         return "layout/base";
 
     }
+
+ /*   @PostMapping("/payment")
+    public String payment(Model model, @RequestParam Long[] seatsId, @RequestParam(required = false) Long couponId, @RequestParam(required = false) Long totalPrice, @RequestParam Long scheduleId, @RequestParam Long movieId, @RequestParam Long paymentId, @ModelAttribute("sessionUser") SessionUser sessionUser) {
+        for (long seat : seatsId) {
+            System.out.println("seat = " + seat);
+        }
+        System.out.println("totalPrice = " + totalPrice);
+        System.out.println("scheduleId = " + scheduleId);
+        System.out.println("movieId = " + movieId);
+        System.out.println("sessionUser = " + sessionUser.getId());
+        System.out.println("paymentId = " + paymentId);
+        if (sessionUser != null) {
+            if (couponId != null) {
+                bookingService.insertBooking(seatsId, sessionUser.getId(), scheduleId, couponId, totalPrice, paymentId);
+            } else {
+                bookingService.insertBooking(seatsId, sessionUser.getId(), scheduleId, totalPrice, paymentId);
+            }
+
+            Movies movies = movieService.movieInfo(movieId);
+            Schedules schedules = scheduleService.getSchedule(scheduleId);
+            List<Seats> seats = seatService.bookingSeats(seatsId);
+
+            model.addAttribute("content", "booking/confirmation_screen");
+            model.addAttribute("title", "決済確認");
+            model.addAttribute("totalPrice", totalPrice);
+            model.addAttribute("seats", seats);
+            model.addAttribute("schedule", schedules);
+            model.addAttribute("movie", movies);
+
+        } else {
+            return "redirect:/";
+        }
+
+        return "layout/base";
+
+    }*/
 }

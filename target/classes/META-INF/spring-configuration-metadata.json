@@ -1,0 +1,17 @@
+{
+  "groups": [
+    {
+      "name": "file",
+      "type": "com.movie.config.FileProperties",
+      "sourceType": "com.movie.config.FileProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "file.upload-dir",
+      "type": "java.lang.String",
+      "sourceType": "com.movie.config.FileProperties"
+    }
+  ],
+  "hints": []
+}

@@ -1,0 +1,83 @@
+<section th:fragment="content">
+	<!-- prs title wrapper Start -->
+	<div class="prs_title_main_sec_wrapper">
+		<div class="prs_title_img_overlay"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<div class="prs_title_heading_wrapper">
+						<h2>Confirmation Screen</h2>
+						<ul>
+							<li><a th:href="@{/}">Home</a></li>
+							<li>&nbsp;&nbsp; >&nbsp;&nbsp; Confirmation Screen</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- prs title wrapper End -->
+	<!-- st bc Start -->
+	<div class="st_bcc_main_main_wrapper float_left">
+		<div class="st_bcc_main_wrapper">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="st_bcc_heading_wrapper float_left">
+							<i class="fa fa-check-circle"></i>
+							<h3>Payment of <span th:text="${totalPrice}"></span> Complete successful</h3>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div class="st_bcc_ticket_boxes_wrapper float_left">
+							<div class="st_bcc_tecket_top_hesder float_left">
+								<p>Your Booking is Confirmed!</p>
+							</div>
+							<div class="st_bcc_tecket_bottom_hesder float_left">
+								<div class="st_bcc_tecket_bottom_left_wrapper">
+									<div class="st_bcc_tecket_bottom_inner_left">
+										<div class="st_bcc_teckt_bot_inner_img">
+											<img th:src="@{'/poster/' + ${movie.posterImg}}" alt="Poster" style="width:85px; height:127px;">
+										</div>
+										<div class="st_bcc_teckt_bot_inner_img_cont">
+											<h4 th:text="${movie.title}"></h4>
+											<h5 th:text="${schedule.screenId}"></h5>
+											<h3 th:text="${#temporals.format(schedule.watchDate, 'dd-MMM-yy')} + '|' + ${#temporals.format(schedule.startTime, 'hh:mm')}"></h3>
+										</div>
+										<div class="st_purchase_img">
+											<img th:src="@{/images/content/pur2.png}" alt="Purchase Icon">
+										</div>
+									</div>
+									<div class="st_bcc_tecket_bottom_inner_right">
+										<i class="fas fa-chair"></i>
+										<h3>
+											<span th:text="${#lists.size(seats)} + ' Tickets'"></span>
+											<br>
+											<span th:each="seat, iterStat : ${seats}">
+                                                <span th:text="${seat.seatColumn} + ${seat.seatRow}"></span>
+                                                <span th:if="${!iterStat.last}">, </span>
+                                            </span>
+										</h3>
+									</div>
+								</div>
+								<div class="st_bcc_tecket_bottom_left_price_wrapper">
+									<h4>Total Amount</h4>
+									<h5 th:text="${totalPrice}"></h5>
+								</div>
+							</div>
+						</div>
+						<div class="st_bcc_ticket_boxes_bottom_wrapper float_left">
+							<p>You can access your ticket from your Profile. We will send you
+								<br>an e-Mail/SMS Confirmation within 15 Minutes.</p>
+							<ul>
+								<li><a th:href="@{/invite-friends}">INVITE FRIENDS</a></li>
+								<li><a th:href="@{/locate-friend}">Locate Friend</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- st bc End -->
+</section>
